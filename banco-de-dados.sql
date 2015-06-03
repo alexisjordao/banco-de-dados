@@ -148,8 +148,10 @@ CREATE TABLE Opera (
 );
 
 CREATE TABLE Conserta (
+  idConserta INTEGER NOT NULL,
   Brinquedo_idBrinquedo INTEGER NOT NULL,
   Tecnico_Funcionario_idFuncionario INTEGER NOT NULL,
   Tecnico_idSuporteTecnico INTEGER NOT NULL,
-  diaSemana DATE NULL
+  diaSemana DATE NULL,
+  PRIMARY KEY(idConserta)
 );
