@@ -1,14 +1,14 @@
 CREATE TABLE Credito (
-  idCredito INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  valor INTEGER UNSIGNED NULL,
+  idCredito INTEGER NOT NULL,
+  valor INTEGER NULL,
   PRIMARY KEY(idCredito)
 );
 
 CREATE TABLE Endereço (
-  idEndereço INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  idEndereço INTEGER NOT NULL,
   rua VARCHAR(60) NULL,
   bairro VARCHAR(30) NULL,
-  numero INTEGER UNSIGNED NULL,
+  numero INTEGER NULL,
   CEP VARCHAR(9) NULL,
   cidade VARCHAR(60) NULL,
   UF VARCHAR(2) NULL,
@@ -16,161 +16,140 @@ CREATE TABLE Endereço (
 );
 
 CREATE TABLE Brinquedo (
-  idBrinquedo INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  idBrinquedo INTEGER NOT NULL,
   descricao VARCHAR(40) NOT NULL,
   dataChegada DATE NOT NULL,
   dataUltimoUso DATE NULL,
-  frequenciaUso INTEGER UNSIGNED NOT NULL,
-  ticketPremioMax INTEGER UNSIGNED NULL,
-  ticketsCurrBrinquedo INTEGER UNSIGNED NULL,
-  preco INTEGER UNSIGNED NOT NULL,
+  frequenciaUso INTEGER NOT NULL,
+  ticketPremioMax INTEGER NULL,
+  ticketsCurrBrinquedo INTEGER NULL,
+  preco INTEGER NOT NULL,
   Tipo CHAR NULL,
   PRIMARY KEY(idBrinquedo)
 );
 
 CREATE TABLE Pessoa (
-  idPessoa INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Endereço_idEndereço INTEGER UNSIGNED NOT NULL,
+  idPessoa INTEGER NOT NULL,
+  Endereço_idEndereço INTEGER NOT NULL,
   nome VARCHAR(60) NOT NULL,
-  CPF INTEGER UNSIGNED NOT NULL,
+  CPF INTEGER NOT NULL,
   dataNascimento DATE NULL,
-  PRIMARY KEY(idPessoa),
-  INDEX Pessoa_FKIndex1(Endereço_idEndereço)
+  PRIMARY KEY(idPessoa)
 );
 
 CREATE TABLE Telefone (
-  idTelefone INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Pessoa_idPessoa INTEGER UNSIGNED NOT NULL,
+  idTelefone INTEGER NOT NULL,
+  Pessoa_idPessoa INTEGER NOT NULL,
   tipo VARCHAR(20) NULL,
   numero VARCHAR(10) NULL,
   DDD VARCHAR(3) NULL,
-  PRIMARY KEY(idTelefone),
-  INDEX Telefone_FKIndex1(Pessoa_idPessoa)
+  PRIMARY KEY(idTelefone)
 );
 
 CREATE TABLE Cliente (
-  idCliente INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Pessoa_idPessoa INTEGER UNSIGNED NOT NULL,
+  idCliente INTEGER NOT NULL,
+  Pessoa_idPessoa INTEGER NOT NULL,
   dataCadatro DATE NOT NULL,
-  PRIMARY KEY(idCliente),
-  INDEX Cliente_FKIndex1(Pessoa_idPessoa)
+  PRIMARY KEY(idCliente)
 );
 
 CREATE TABLE Cartao (
-  idCartao INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Cliente_idCliente INTEGER UNSIGNED NOT NULL,
+  idCartao INTEGER NOT NULL,
+  Cliente_idCliente INTEGER NOT NULL,
   dataEmissao DATE NOT NULL,
-  saldo INTEGER UNSIGNED NULL,
+  saldo INTEGER NULL,
   ativo BOOL NOT NULL,
-  PRIMARY KEY(idCartao),
-  INDEX Cartao_FKIndex1(Cliente_idCliente)
+  PRIMARY KEY(idCartao)
 );
 
 CREATE TABLE Funcionario (
-  idFuncionario INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Pessoa_idPessoa INTEGER UNSIGNED NOT NULL,
+  idFuncionario INTEGER NOT NULL,
+  Pessoa_idPessoa INTEGER NOT NULL,
   numCarteiraDeTrabalho VARCHAR(20) NOT NULL,
   dataAdmissao DATE NULL,
   dataDemissao DATE NULL,
-  PRIMARY KEY(idFuncionario),
-  INDEX Funcionario_FKIndex1(Pessoa_idPessoa)
+  PRIMARY KEY(idFuncionario)
 );
 
 CREATE TABLE CompraCredito (
-  idCompraCredito INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Credito_idCredito INTEGER UNSIGNED NOT NULL,
-  Cartao_idCartao INTEGER UNSIGNED NOT NULL,
+  idCompraCredito INTEGER NOT NULL,
+  Credito_idCredito INTEGER NOT NULL,
+  Cartao_idCartao INTEGER NOT NULL,
   dataCompra DATE NULL,
-  PRIMARY KEY(idCompraCredito),
-  INDEX CompraCredito_FKIndex1(Cartao_idCartao),
-  INDEX CompraCredito_FKIndex2(Credito_idCredito)
+  PRIMARY KEY(idCompraCredito)
 );
 
 CREATE TABLE Debito (
-  idDebito INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Brinquedo_idBrinquedo INTEGER UNSIGNED NOT NULL,
-  Cartao_idCartao INTEGER UNSIGNED NOT NULL,
+  idDebito INTEGER NOT NULL,
+  Brinquedo_idBrinquedo INTEGER NOT NULL,
+  Cartao_idCartao INTEGER NOT NULL,
   dataDebito DATE NULL,
-  PRIMARY KEY(idDebito),
-  INDEX Debito_FKIndex1(Cartao_idCartao),
-  INDEX Debito_FKIndex2(Brinquedo_idBrinquedo)
+  PRIMARY KEY(idDebito)
 );
 
 CREATE TABLE Premio (
-  idPremio INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Cliente_idCliente INTEGER UNSIGNED NOT NULL,
+  idPremio INTEGER NOT NULL,
+  Cliente_idCliente INTEGER NOT NULL,
   descricao VARCHAR(60) NULL,
-  qntTickets INTEGER UNSIGNED NULL,
-  PRIMARY KEY(idPremio),
-  INDEX Premio_FKIndex1(Cliente_idCliente)
+  qntTickets INTEGER NULL,
+  PRIMARY KEY(idPremio)
 );
 
 CREATE TABLE Gerente (
-  idGerente INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Funcionario_idFuncionario INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY(idGerente, Funcionario_idFuncionario),
-  INDEX Gerente_FKIndex1(Funcionario_idFuncionario)
+  idGerente INTEGER NOT NULL,
+  Funcionario_idFuncionario INTEGER NOT NULL,
+  PRIMARY KEY(idGerente, Funcionario_idFuncionario)
 );
 
 CREATE TABLE OperadorDeBrinquedo (
-  idOperadorDeBrinquedo INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Funcionario_idFuncionario INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY(idOperadorDeBrinquedo, Funcionario_idFuncionario),
-  INDEX OperadorDeBrinquedo_FKIndex1(Funcionario_idFuncionario)
+  idOperadorDeBrinquedo INTEGER NOT NULL,
+  Funcionario_idFuncionario INTEGER NOT NULL,
+  PRIMARY KEY(idOperadorDeBrinquedo, Funcionario_idFuncionario)
 );
 
 CREATE TABLE Tecnico (
-  idSuporteTecnico INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Funcionario_idFuncionario INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY(idSuporteTecnico, Funcionario_idFuncionario),
-  INDEX Tecnico_FKIndex1(Funcionario_idFuncionario)
+  idSuporteTecnico INTEGER NOT NULL,
+  Funcionario_idFuncionario INTEGER NOT NULL,
+  PRIMARY KEY(idSuporteTecnico, Funcionario_idFuncionario)
 );
 
 CREATE TABLE Salario (
-  idSalario INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Funcionario_idFuncionario INTEGER UNSIGNED NOT NULL,
-  valor INTEGER UNSIGNED NULL,
-  PRIMARY KEY(idSalario),
-  INDEX Salario_FKIndex1(Funcionario_idFuncionario)
+  idSalario INTEGER NOT NULL,
+  Funcionario_idFuncionario INTEGER NOT NULL,
+  valor INTEGER NULL,
+  PRIMARY KEY(idSalario)
 );
 
 CREATE TABLE Seguranca (
-  idSeguranca INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Funcionario_idFuncionario INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY(idSeguranca, Funcionario_idFuncionario),
-  INDEX SeguranÃ§a_FKIndex1(Funcionario_idFuncionario)
+  idSeguranca INTEGER NOT NULL,
+  Funcionario_idFuncionario INTEGER NOT NULL,
+  PRIMARY KEY(idSeguranca, Funcionario_idFuncionario)
 );
 
 CREATE TABLE Balconista (
-  idBalconista INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Funcionario_idFuncionario INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY(idBalconista, Funcionario_idFuncionario),
-  INDEX Balconista_FKIndex1(Funcionario_idFuncionario)
+  idBalconista INTEGER NOT NULL,
+  Funcionario_idFuncionario INTEGER NOT NULL,
+  PRIMARY KEY(idBalconista, Funcionario_idFuncionario)
 );
 
 CREATE TABLE ASG (
-  idASG INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Funcionario_idFuncionario INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY(idASG, Funcionario_idFuncionario),
-  INDEX ASG_FKIndex1(Funcionario_idFuncionario)
+  idASG INTEGER NOT NULL,
+  Funcionario_idFuncionario INTEGER NOT NULL,
+  PRIMARY KEY(idASG, Funcionario_idFuncionario)
 );
 
 CREATE TABLE Opera (
-  idOpera INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  Brinquedo_idBrinquedo INTEGER UNSIGNED NOT NULL,
-  OperadorDeBrinquedo_Funcionario_idFuncionario INTEGER UNSIGNED NOT NULL,
-  OperadorDeBrinquedo_idOperadorDeBrinquedo INTEGER UNSIGNED NOT NULL,
+  idOpera INTEGER NOT NULL,
+  Brinquedo_idBrinquedo INTEGER NOT NULL,
+  OperadorDeBrinquedo_Funcionario_idFuncionario INTEGER NOT NULL,
+  OperadorDeBrinquedo_idOperadorDeBrinquedo INTEGER NOT NULL,
   diaSemana VARCHAR(7) NULL,
-  PRIMARY KEY(idOpera),
-  INDEX Responsavel_FKIndex1(OperadorDeBrinquedo_idOperadorDeBrinquedo, OperadorDeBrinquedo_Funcionario_idFuncionario),
-  INDEX Responsavel_FKIndex2(Brinquedo_idBrinquedo)
+  PRIMARY KEY(idOpera)
 );
 
 CREATE TABLE Conserta (
-  Brinquedo_idBrinquedo INTEGER UNSIGNED NOT NULL,
-  Tecnico_Funcionario_idFuncionario INTEGER UNSIGNED NOT NULL,
-  Tecnico_idSuporteTecnico INTEGER UNSIGNED NOT NULL,
-  diaSemana DATE NULL,
-  INDEX Table_21_FKIndex1(Tecnico_idSuporteTecnico, Tecnico_Funcionario_idFuncionario),
-  INDEX Table_21_FKIndex2(Brinquedo_idBrinquedo)
+  Brinquedo_idBrinquedo INTEGER NOT NULL,
+  Tecnico_Funcionario_idFuncionario INTEGER NOT NULL,
+  Tecnico_idSuporteTecnico INTEGER NOT NULL,
+  diaSemana DATE NULL
 );
