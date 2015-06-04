@@ -1,22 +1,22 @@
 CREATE TABLE Credito (
-  idCredito INTEGER NOT NULL,
+  idCredito SERIAL NOT NULL,
   valor INTEGER NULL,
   PRIMARY KEY(idCredito)
 );
 
-CREATE TABLE Endereço (
-  idEndereço INTEGER NOT NULL,
+CREATE TABLE Endereco (
+  idEndereço SERIAL NOT NULL,
   rua VARCHAR(60) NULL,
   bairro VARCHAR(30) NULL,
   numero INTEGER NULL,
   CEP VARCHAR(9) NULL,
-  cidade VARCHAR(60) NULL,
-  UF VARCHAR(2) NULL,
+  cidade VARCHAR(60) NOT NULL,
+  UF VARCHAR(2) NOT NULL,
   PRIMARY KEY(idEndereço)
 );
 
 CREATE TABLE Brinquedo (
-  idBrinquedo INTEGER NOT NULL,
+  idBrinquedo SERIAL NOT NULL,
   descricao VARCHAR(40) NOT NULL,
   dataChegada DATE NOT NULL,
   dataUltimoUso DATE NULL,
@@ -24,13 +24,13 @@ CREATE TABLE Brinquedo (
   ticketPremioMax INTEGER NULL,
   ticketsCurrBrinquedo INTEGER NULL,
   preco INTEGER NOT NULL,
-  Tipo CHAR NULL,
+  tipoBrinquedo CHAR NULL,
   PRIMARY KEY(idBrinquedo)
 );
 
 CREATE TABLE Pessoa (
-  idPessoa INTEGER NOT NULL,
-  Endereço_idEndereço INTEGER NOT NULL,
+  idPessoa SERIAL NOT NULL,
+  idEndereco INTEGER NOT NULL REFERENCES Endereco,
   nome VARCHAR(60) NOT NULL,
   CPF INTEGER NOT NULL,
   dataNascimento DATE NULL,
@@ -38,24 +38,24 @@ CREATE TABLE Pessoa (
 );
 
 CREATE TABLE Telefone (
-  idTelefone INTEGER NOT NULL,
-  Pessoa_idPessoa INTEGER NOT NULL,
-  tipo VARCHAR(20) NULL,
-  numero VARCHAR(10) NULL,
+  idTelefone SERIAL NOT NULL,
+  idPessoa INTEGER NOT NULL REFERENCES Pessoa,
+  tipoTelefone VARCHAR(20) NULL,
+  numero VARCHAR(9) NULL,
   DDD VARCHAR(3) NULL,
   PRIMARY KEY(idTelefone)
 );
 
 CREATE TABLE Cliente (
-  idCliente INTEGER NOT NULL,
-  Pessoa_idPessoa INTEGER NOT NULL,
+  idCliente SERIAL NOT NULL,
+  idPessoa INTEGER NOT NULL REFERENCES Pessoa,
   dataCadatro DATE NOT NULL,
   PRIMARY KEY(idCliente)
 );
 
 CREATE TABLE Cartao (
-  idCartao INTEGER NOT NULL,
-  Cliente_idCliente INTEGER NOT NULL,
+  idCartao SERIAL NOT NULL,
+  idCliente INTEGER NOT NULL REFERENCES Cliente,
   dataEmissao DATE NOT NULL,
   saldo INTEGER NULL,
   ativo BOOL NOT NULL,
@@ -63,95 +63,95 @@ CREATE TABLE Cartao (
 );
 
 CREATE TABLE Funcionario (
-  idFuncionario INTEGER NOT NULL,
-  Pessoa_idPessoa INTEGER NOT NULL,
+  idFuncionario SERIAL NOT NULL,
+  idPessoa INTEGER NOT NULL REFERENCES Pessoa,
   numCarteiraDeTrabalho VARCHAR(20) NOT NULL,
-  dataAdmissao DATE NULL,
+  dataAdmissao DATE NOT NULL,
   dataDemissao DATE NULL,
   PRIMARY KEY(idFuncionario)
 );
 
 CREATE TABLE CompraCredito (
-  idCompraCredito INTEGER NOT NULL,
-  Credito_idCredito INTEGER NOT NULL,
-  Cartao_idCartao INTEGER NOT NULL,
+  idCompraCredito SERIAL NOT NULL,
+  idCredito INTEGER NOT NULL REFERENCES Credito,
+  idCartao INTEGER NOT NULL REFERENCES Cartao,
   dataCompra DATE NULL,
   PRIMARY KEY(idCompraCredito)
 );
 
 CREATE TABLE Debito (
-  idDebito INTEGER NOT NULL,
-  Brinquedo_idBrinquedo INTEGER NOT NULL,
-  Cartao_idCartao INTEGER NOT NULL,
+  idDebito SERIAL NOT NULL,
+  idBrinquedo INTEGER NOT NULL REFERENCES Brinquedo,
+  idCartao INTEGER NOT NULL REFERENCES Cartao,
   dataDebito DATE NULL,
   PRIMARY KEY(idDebito)
 );
 
 CREATE TABLE Premio (
-  idPremio INTEGER NOT NULL,
-  Cliente_idCliente INTEGER NOT NULL,
+  idPremio SERIAL NOT NULL,
+  idCliente INTEGER NOT NULL REFERENCES Cliente,
   descricao VARCHAR(60) NULL,
   qntTickets INTEGER NULL,
   PRIMARY KEY(idPremio)
 );
 
 CREATE TABLE Gerente (
-  idGerente INTEGER NOT NULL,
-  Funcionario_idFuncionario INTEGER NOT NULL,
-  PRIMARY KEY(idGerente, Funcionario_idFuncionario)
+  idGerente SERIAL NOT NULL,
+  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
+  PRIMARY KEY(idGerente)
 );
 
 CREATE TABLE OperadorDeBrinquedo (
-  idOperadorDeBrinquedo INTEGER NOT NULL,
-  Funcionario_idFuncionario INTEGER NOT NULL,
-  PRIMARY KEY(idOperadorDeBrinquedo, Funcionario_idFuncionario)
+  idOperadorDeBrinquedo SERIAL NOT NULL,
+  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
+  PRIMARY KEY(idOperadorDeBrinquedo)
 );
 
 CREATE TABLE Tecnico (
-  idSuporteTecnico INTEGER NOT NULL,
-  Funcionario_idFuncionario INTEGER NOT NULL,
-  PRIMARY KEY(idSuporteTecnico, Funcionario_idFuncionario)
+  idSuporteTecnico SERIAL NOT NULL,
+  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
+  PRIMARY KEY(idSuporteTecnico)
 );
 
 CREATE TABLE Salario (
-  idSalario INTEGER NOT NULL,
-  Funcionario_idFuncionario INTEGER NOT NULL,
-  valor INTEGER NULL,
+  idSalario SERIAL NOT NULL,
+  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
+  valor INTEGER NOT NULL,
   PRIMARY KEY(idSalario)
 );
 
 CREATE TABLE Seguranca (
-  idSeguranca INTEGER NOT NULL,
-  Funcionario_idFuncionario INTEGER NOT NULL,
-  PRIMARY KEY(idSeguranca, Funcionario_idFuncionario)
+  idSeguranca SERIAL NOT NULL,
+  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
+  PRIMARY KEY(idSeguranca)
 );
 
 CREATE TABLE Balconista (
-  idBalconista INTEGER NOT NULL,
-  Funcionario_idFuncionario INTEGER NOT NULL,
-  PRIMARY KEY(idBalconista, Funcionario_idFuncionario)
+  idBalconista SERIAL NOT NULL,
+  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
+  PRIMARY KEY(idBalconista)
 );
 
 CREATE TABLE ASG (
-  idASG INTEGER NOT NULL,
-  Funcionario_idFuncionario INTEGER NOT NULL,
-  PRIMARY KEY(idASG, Funcionario_idFuncionario)
+  idASG SERIAL NOT NULL,
+  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
+  PRIMARY KEY(idASG)
 );
 
 CREATE TABLE Opera (
-  idOpera INTEGER NOT NULL,
-  Brinquedo_idBrinquedo INTEGER NOT NULL,
-  OperadorDeBrinquedo_Funcionario_idFuncionario INTEGER NOT NULL,
-  OperadorDeBrinquedo_idOperadorDeBrinquedo INTEGER NOT NULL,
+  idOpera SERIAL NOT NULL,
+  idBrinquedo INTEGER NOT NULL REFERENCES Brinquedo,
+  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
+  idOperadorDeBrinquedo INTEGER NOT NULL REFERENCES OperadorDeBrinquedo,
   diaSemana VARCHAR(7) NULL,
   PRIMARY KEY(idOpera)
 );
 
 CREATE TABLE Conserta (
-  idConserta INTEGER NOT NULL,
-  Brinquedo_idBrinquedo INTEGER NOT NULL,
-  Tecnico_Funcionario_idFuncionario INTEGER NOT NULL,
-  Tecnico_idSuporteTecnico INTEGER NOT NULL,
+  idConserta SERIAL NOT NULL,
+  idBrinquedo INTEGER NOT NULL REFERENCES Brinquedo,
+  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
+  idSuporteTecnico INTEGER NOT NULL REFERENCES Tecnico,
   diaSemana DATE NULL,
   PRIMARY KEY(idConserta)
 );
