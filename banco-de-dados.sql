@@ -5,14 +5,14 @@ CREATE TABLE Credito (
 );
 
 CREATE TABLE Endereco (
-  idEndereço SERIAL NOT NULL,
+  idEndereco SERIAL NOT NULL,
   rua VARCHAR(60) NULL,
   bairro VARCHAR(30) NULL,
   numero INTEGER NULL,
   CEP VARCHAR(9) NULL,
   cidade VARCHAR(60) NOT NULL,
   UF VARCHAR(2) NOT NULL,
-  PRIMARY KEY(idEndereço)
+  PRIMARY KEY(idEndereco)
 );
 
 CREATE TABLE Brinquedo (
@@ -155,3 +155,24 @@ CREATE TABLE Conserta (
   diaSemana DATE NULL,
   PRIMARY KEY(idConserta)
 );
+
+SELECT cr.idCredito, cr.valor FROM Credito cr
+SELECT e.idEndereco, e.rua, e.bairro, e.numero, e.CEP, e.cidade, e.UF FROM Endereco e
+SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsCurrBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
+SELECT p.idPessoa, p.idEndereco, p.nome, p.CPF, p.dataNascimento FROM Pessoa p
+SELECT tel.idTelefone, tel.idPessoa, tel.tipoTelefone, tel.numero, tel.DDD FROM Telefone tel
+SELECT cl.idCliente, cl.idPessoa, cl.dataCadatro FROM Cliente cl
+SELECT ca.idCartao, ca.idCliente, ca.dataEmissao, ca.saldo, ca.ativo FROM Cartao ca
+SELECT f.idFuncionario, f.idPessoa, f.numCarteiraDeTrabalho,f.dataAdmissao, f.dataDemissao FROM Funcionario f
+SELECT cc.idCompraCredito, cc.idCredito, cc.idCartao, cc.dataCompra FROM CompraCredito cc
+SELECT d.idDebito, d.idBrinquedo, d.idCartao, d.dataDebito FROM Debito d
+SELECT pr.idPremio, pr.idCliente, pr.descricao, pr.qntTickets FROM Premio pr
+SELECT g.idGerente, g.idFuncionario FROM Gerente g
+SELECT ob.idOperadorDeBrinquedo, ob.idFuncionario FROM OperadorDeBrinquedo ob
+SELECT tec.idSuporteTecnico, tec.idFuncionario FROM Tecnico tec
+SELECT sa.idSalario, sa.idFuncionario, sa.valor FROM Salario sa
+SELECT se.idSeguranca, se.idFuncionario FROM Seguranca se
+SELECT ba.idBalconista, ba.idFuncionario FROM Balconista ba
+SELECT asg.idASG, asg.idFuncionario FROM ASG asg
+SELECT op.idOpera, op.idBrinquedo, op.idFuncionario,op.idOperadorDeBrinquedo, op.diaSemana FROM Opera op
+SELECT co.idConserta, co.idBrinquedo, co.idFuncionario,co.idSuporteTecnico, co.diaSemana FROM Conserta co
