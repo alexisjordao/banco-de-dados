@@ -18,6 +18,7 @@ Criar scripts do Banco e as tabelas
 
 ---------- PARA MUDAR --------
 Mudar o nome cadatro > cadastro
+ticketCURRbriquendo p/ ticketATTbrinquedo
 Unique em carteira de trabalho
 Bool em gerente
 entidade cargo
