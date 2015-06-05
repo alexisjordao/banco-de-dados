@@ -4,7 +4,7 @@
   PRIMARY KEY(idCredito)
 );
 
-/*Insets ok*/
+/*Inserts ok*/
 CREATE TABLE Endereco (
   idEndereco SERIAL NOT NULL,
   rua VARCHAR(60) NULL,

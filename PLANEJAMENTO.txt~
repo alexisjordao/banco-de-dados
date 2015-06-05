@@ -1,0 +1,29 @@
+Planejamento de desenvolvimento do projeto
+
+—————————— A CUMPRIR ——————————
+Implementar instancia Corrida de Cavalos
+Implementar intancia Jogo da roleta
+Aplicar Tratamento de exceções
+
+
+
+—————————— EM ANDAMENTO ——————————
+Identificar Padrões usados
+Reestruturar instância 1
+Criar estrutura do framework a partir da inst1
+Implementar DAO
+
+OBSERVAÇÃO:(PARA ENVIAR SEGUNDA 01/06/2015 23:59)++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Enviar link do github onde esta o projeto (disponibilizar os slides de todas as apresentações do projeto no github)
+- Disponibilizar arquivo explicando como executar a instância criada (aplicação) a partir do framework 
+- Código implementado do framework para 1 instância definida, sem bibliotecas do projeto (esses posso olhar no github)
+- Indicação dos padrões de projeto utilizados
+- Apresentação e execução da instancia do framework
+OBSERVAÇÃO:++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+—————————— CUMPRIDO ——————————
+Implementação de ponstos fixos
+Implementação funcionalidades básicas do framework
+Implementar instancia Jogo de Dados
+
