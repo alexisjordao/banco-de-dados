@@ -1,4 +1,4 @@
-Planejamento de desenvolvimento do projeto
+﻿Planejamento de desenvolvimento do projeto
 
 —————————— A CUMPRIR ——————————
 Criar View
@@ -15,3 +15,10 @@ Povoar tabelas do banco
 —————————— CUMPRIDO ——————————
 Criar DER
 Criar scripts do Banco e as tabelas
+
+---------- PARA MUDAR --------
+Mudar o nome cadatro > cadastro
+Unique em carteira de trabalho
+Bool em gerente
+entidade cargo
+se dataDemissao IS NOT NULL não pode ter outro gerente
