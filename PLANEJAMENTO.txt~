@@ -2,6 +2,12 @@ Planejamento de desenvolvimento do projeto
 
 —————————— A CUMPRIR —————————————
 Escrever relatório de desenvolvimento
+
+=======
+
+Identrificar onde usar os indices
+
+>>>>>>> fbecd34ce88dfab3363f7cd9dd90a46944f196c6
 Criar tarnsções:
 - Compra de crédito
 - descronto de crédito (quando o clente usar algum brinquedo)
@@ -20,10 +26,19 @@ Criar Gatilhos e funções:
 Povoar tabelas do banco (insesir mais elementos no decorrer dos testes)
 Criar Selects (crar de acordo com a necessidade que aparecer)
 
+
 Criar indices (todos os tipos dados em aula)
+=======
+
+>>>>>>> fbecd34ce88dfab3363f7cd9dd90a46944f196c6
 
 
 —————————— CUMPRIDO ——————————————
 Criar DER
 Criar scripts do Banco e as tabelas
+
+=======
+Criar indices: hash, btree
+
+>>>>>>> fbecd34ce88dfab3363f7cd9dd90a46944f196c6
 

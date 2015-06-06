@@ -5,13 +5,16 @@ Criar View
 Criar Gatilhos
 Criar Funções
 Criar Selects
-
 Escrever relatório de desenvolvimento
 Criar transções:
 - compra de crédito
 - descronto de crédito (quando o cliente usar algum brinquedo)
 - Obs: PENSAR EM MAIS
-
+Identrificar onde usar os indices
+Criar transações:
+- Compra de crédito
+- descronto de crédito (quando o clente usar algum brinquedo)
+- Obs: PENSAR EM MAIS
 Criar Gatilhos e funções:
 - Garantir que exista apenas 1 gerente
 - Garantir que apenas tecnicos consertem brinquedos
@@ -25,8 +28,7 @@ Povoar tabelas do banco (insesir mais elementos no decorrer dos testes)
 Criar Selects (criar de acordo com a necessidade que aparecer)
 Criar indices (todos os tipos dados em aula)
 
-
 —————————— CUMPRIDO ——————————————
 Criar DER
-Criar scripts do Banco e as tabelas
-
+Criar scripts do banco e as tabelas
+Criar indices: hash, btree

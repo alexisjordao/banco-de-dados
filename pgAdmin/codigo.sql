@@ -271,7 +271,7 @@ INSERT INTO Cargo(descricao, salario)
 values('Gerente', 3000);
 
 INSERT INTO Cargo(descricao, salario)
-values('Balconista', 1000);
+values('Recepcionista', 1000);
 
 INSERT INTO Cargo(descricao, salario)
 values('Operador de Brinquedo', 1000);
@@ -361,6 +361,7 @@ SELECT cr.idCredito, cr.valor FROM Credito cr
 SELECT e.idEndereco, e.rua, e.bairro, e.numero, e.CEP, e.cidade, e.UF FROM Endereco e
 
 /* Todos os brinquedos */
+
 SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsAttBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
 
 /* Todas as pessoas */
@@ -398,3 +399,15 @@ SELECT op.idOpera, op.idBrinquedo, op.idFuncionario, op.diaSemana FROM Opera op
 
 /* Todos os funcionários que consertam brinquedos*/
 SELECT co.idConserta, co.idBrinquedo, co.idFuncionario, co.diaSemana FROM Conserta co
+
+/*-----------------------------------------------------------------------------------------------*/
+
+/*Indice para tabela Pessoa (idPessoa)*/
+CREATE INDEX index_hash ON Pessoa USING HASH (idPessoa);
+
+EXPLAIN ANALYSE SELECT * FROM Pessoa WHERE idPessoa = 10;
+
+/*Indice para tabela Cargo (salario)*/
+CREATE INDEX index_btree ON Cargo USING HASH (salario);
+
+EXPLAIN ANALYSE SELECT * FROM Cargo WHERE salario BETWEEN 2000 AND 3000;
