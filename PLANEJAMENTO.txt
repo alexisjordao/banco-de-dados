@@ -1,6 +1,7 @@
 ﻿Planejamento de desenvolvimento do projeto
 
 —————————— A CUMPRIR ——————————
+Entidade CARGO
 Criar View
 Criar Gatilhos
 Criar Funções
@@ -15,11 +16,9 @@ Povoar tabelas do banco
 —————————— CUMPRIDO ——————————
 Criar DER
 Criar scripts do Banco e as tabelas
+Mudar o nome dataCadatro > dataCadastro
+Mudar o nome ticketCURRbriquendo p/ ticketATTbrinquedo 
+Adicionar UNIQUE em carteira de trabalho
 
----------- PARA MUDAR --------
-Mudar o nome cadatro > cadastro
-ticketCURRbriquendo p/ ticketATTbrinquedo
-Unique em carteira de trabalho
-Bool em gerente
-entidade cargo
-se dataDemissao IS NOT NULL não pode ter outro gerente
+—————————— LEMBRAR ——————————
+Função: Se dataDemissao IS NOT NULL não pode ter outro gerente
