@@ -1,12 +1,11 @@
 ﻿Planejamento de desenvolvimento do projeto
 
-—————————— A CUMPRIR ——————————
+—————————— A CUMPRIR —————————————
 Criar View
 Criar Gatilhos
 Criar Funções
 Criar Selects
 
-—————————— A CUMPRIR —————————————
 Escrever relatório de desenvolvimento
 Criar transções:
 - compra de crédito
