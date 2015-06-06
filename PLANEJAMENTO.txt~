@@ -1,16 +1,10 @@
-﻿Planejamento de desenvolvimento do projeto
-
-—————————— A CUMPRIR ——————————
-Criar View
-Criar Gatilhos
-Criar Funções
-Criar Selects
+Planejamento de desenvolvimento do projeto
 
 —————————— A CUMPRIR —————————————
 Escrever relatório de desenvolvimento
-Criar transções:
-- compra de crédito
-- descronto de crédito (quando o cliente usar algum brinquedo)
+Criar tarnsções:
+- Compra de crédito
+- descronto de crédito (quando o clente usar algum brinquedo)
 - Obs: PENSAR EM MAIS
 
 Criar Gatilhos e funções:
@@ -21,9 +15,11 @@ Criar Gatilhos e funções:
 - Garantir que a quantidade de tickets em um brinquedo que seja do tipo TRUE (emita tickets) não seja negativo
 - Obs: PENSAR EM MAIS
 
+
 —————————— EM ANDAMENTO ——————————
 Povoar tabelas do banco (insesir mais elementos no decorrer dos testes)
-Criar Selects (criar de acordo com a necessidade que aparecer)
+Criar Selects (crar de acordo com a necessidade que aparecer)
+
 Criar indices (todos os tipos dados em aula)
 
 
