@@ -223,16 +223,16 @@ INSERT INTO Pessoa(idEndereco, nome, CPF, dataNascimento, sexo)
 values(10, 'EDER FERREIRA DO NASCIMENTO JÚNIOR', '976.372.912-27', '1990-07-28', 'M');
 
 /*Inserts Brinquedo */
-INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsCurrBrinquedo, preco, tipoBrinquedo)
+INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsAttBrinquedo, preco, tipoBrinquedo)
 values('Corrida de Carros', '2015-01-04', NULL, 0, 5, 2000, 5, 1);
 
-INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsCurrBrinquedo, preco, tipoBrinquedo)
+INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsAttBrinquedo, preco, tipoBrinquedo)
 values('Corrida de Motos', '2015-01-04', NULL, 0, 5, 2000, 5, 1);
 
-INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsCurrBrinquedo, preco, tipoBrinquedo)
+INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsAttBrinquedo, preco, tipoBrinquedo)
 values('Sinuca', '2015-02-10', NULL, 0,NULL, NULL, 5, 0);
 
-INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsCurrBrinquedo, preco, tipoBrinquedo)
+INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsAttBrinquedo, preco, tipoBrinquedo)
 values('Ping-Pong', '2014-10-04', NULL, 0, NULL, NULL, 5, 0);
 
 /*Inserts Telefone  http://pt.fakenamegenerator.com/gen-male-br-br.php  */
@@ -265,7 +265,6 @@ values(9, 'celular', '6206-3053', '084');
 
 INSERT INTO Telefone(idPessoa, tipoTelefone, numero, DDD)
 values(10, 'celular', '4034-8072', '084');
-
 
 /*Inserts Cargo*/
 INSERT INTO Cargo(descricao, salario)
@@ -346,12 +345,12 @@ INSERT INTO Cartao(idCliente, dataEmissao, saldo, ativo)
 values(4, '2015-06-05', 0, TRUE);
 
 /*Inserts Opera*/
-INSERT INTO Opera(idBrinquedo, idfuncionario, diaSemana)
-values(1, 8, 'Segunda-feira');
+INSERT INTO Opera(idBrinquedo, idFuncionario, diaSemana)
+values(1, 5, 'Segunda-feira');
 
 /*Inserts Conserta*/
-INSERT INTO Conserta(idBrinquedo, idfuncionario, diaSemana)
-values(1, 10, 'Segunda-feira');
+INSERT INTO Conserta(idBrinquedo, idFuncionario, diaSemana)
+values(1, 6, 'Segunda-feira');
 
 /*-----------------------------------------------------------------------------------------------*/
 
@@ -362,7 +361,7 @@ SELECT cr.idCredito, cr.valor FROM Credito cr
 SELECT e.idEndereco, e.rua, e.bairro, e.numero, e.CEP, e.cidade, e.UF FROM Endereco e
 
 /* Todos os brinquedos */
-SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsCurrBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
+SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsAttBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
 
 /* Todas as pessoas */
 SELECT p.idPessoa, p.idEndereco, p.nome, p.CPF, p.dataNascimento FROM Pessoa p
@@ -375,6 +374,9 @@ SELECT cl.idCliente, cl.idPessoa, cl.dataCadastro FROM Cliente cl
 
 /* Todos os cartões */
 SELECT ca.idCartao, ca.idCliente, ca.dataEmissao, ca.saldo, ca.ativo FROM Cartao ca
+
+/* Todos os cargos */
+SELECT  car.idCargo, car.descricao, car.salario FROM Cargo car
 
 /* Todos os funcionários*/
 SELECT f.idFuncionario, f.idPessoa, f.numCarteiraDeTrabalho,f.dataAdmissao, f.dataDemissao FROM Funcionario f
