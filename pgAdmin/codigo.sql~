@@ -1,10 +1,11 @@
-﻿CREATE TABLE Credito (
+﻿/*Inserts OK*/
+CREATE TABLE Credito (
   idCredito SERIAL NOT NULL,
-  valor INTEGER NULL,
+  valor INTEGER NOT NULL UNIQUE,
   PRIMARY KEY(idCredito)
 );
 
-/*Insets ok*/
+/*Inserts ok*/
 CREATE TABLE Endereco (
   idEndereco SERIAL NOT NULL,
   rua VARCHAR(60) NULL,
@@ -16,6 +17,7 @@ CREATE TABLE Endereco (
   PRIMARY KEY(idEndereco)
 );
 
+/*Inserts OK*/
 CREATE TABLE Brinquedo (
   idBrinquedo SERIAL NOT NULL,
   descricao VARCHAR(40) NOT NULL,
@@ -54,10 +56,11 @@ CREATE TABLE Telefone (
 CREATE TABLE Cliente (
   idCliente SERIAL NOT NULL,
   idPessoa INTEGER NOT NULL REFERENCES Pessoa,
-  dataCadatro DATE NOT NULL, /*correção de erro -> cadatro - cadastro*/
+  dataCadastro DATE NOT NULL,
   PRIMARY KEY(idCliente)
 );
 
+/*Inserts OK*/
 CREATE TABLE Cartao (
   idCartao SERIAL NOT NULL,
   idCliente INTEGER NOT NULL REFERENCES Cliente,
@@ -68,15 +71,25 @@ CREATE TABLE Cartao (
 );
 
 /*Inserts OK*/
+CREATE TABLE Cargo(
+  idCargo SERIAL NOT NULL,
+  descricao VARCHAR(60) UNIQUE,
+  salario REAL NOT NULL,
+  PRIMARY KEY(idCargo)
+);
+
+/*Inserts OK*/
 CREATE TABLE Funcionario (
   idFuncionario SERIAL NOT NULL,
   idPessoa INTEGER NOT NULL REFERENCES Pessoa,
+  idCargo INTEGER NOT NULL REFERENCES Cargo,
   numCarteiraDeTrabalho VARCHAR(20) NOT NULL,
   dataAdmissao DATE NOT NULL,
   dataDemissao DATE NULL,
   PRIMARY KEY(idFuncionario)
 );
 
+/*Implementar inserts nas transações*/
 CREATE TABLE CompraCredito (
   idCompraCredito SERIAL NOT NULL,
   idCredito INTEGER NOT NULL REFERENCES Credito,
@@ -85,6 +98,7 @@ CREATE TABLE CompraCredito (
   PRIMARY KEY(idCompraCredito)
 );
 
+/*Implementar inserts nas transações*/
 CREATE TABLE Debito (
   idDebito SERIAL NOT NULL,
   idBrinquedo INTEGER NOT NULL REFERENCES Brinquedo,
@@ -110,75 +124,38 @@ CREATE TABLE Obter (
   PRIMARY KEY(idObter)
 );
 
-/*Inserts OK*/
-CREATE TABLE Gerente (
-  idGerente SERIAL NOT NULL,
-  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
-  PRIMARY KEY(idGerente)
-);
-
-/*Inserts OK*/
-CREATE TABLE OperadorDeBrinquedo (
-  idOperadorDeBrinquedo SERIAL NOT NULL,
-  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
-  PRIMARY KEY(idOperadorDeBrinquedo)
-);
-
-/*Inserts OK*/
-CREATE TABLE Tecnico (
-  idSuporteTecnico SERIAL NOT NULL,
-  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
-  PRIMARY KEY(idSuporteTecnico)
-);
-
-/*Inserts OK*/
-CREATE TABLE Salario (
-  idSalario SERIAL NOT NULL,
-  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
-  valor REAL NOT NULL,
-  PRIMARY KEY(idSalario)
-);
-
-/*Inserts OK*/
-CREATE TABLE Seguranca (
-  idSeguranca SERIAL NOT NULL,
-  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
-  PRIMARY KEY(idSeguranca)
-);
-
-/*Inserts OK*/
-CREATE TABLE Balconista (
-  idBalconista SERIAL NOT NULL,
-  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
-  PRIMARY KEY(idBalconista)
-);
-
-/*Inserts OK*/
-CREATE TABLE ASG (
-  idASG SERIAL NOT NULL,
-  idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
-  PRIMARY KEY(idASG)
-);
-
+/*Insert OK*/
 CREATE TABLE Opera (
   idOpera SERIAL NOT NULL,
   idBrinquedo INTEGER NOT NULL REFERENCES Brinquedo,
   idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
-  idOperadorDeBrinquedo INTEGER NOT NULL REFERENCES OperadorDeBrinquedo,
-  diaSemana VARCHAR(7) NULL,
+  diaSemana VARCHAR(20) NULL CHECK (diaSemana IN ('Domingo', 'Segunda-feira', 'Terça-feira', 'Quarda-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado')),
   PRIMARY KEY(idOpera)
 );
 
+/*Inserts OK*/
 CREATE TABLE Conserta (
   idConserta SERIAL NOT NULL,
   idBrinquedo INTEGER NOT NULL REFERENCES Brinquedo,
   idFuncionario INTEGER NOT NULL REFERENCES Funcionario,
-  idSuporteTecnico INTEGER NOT NULL REFERENCES Tecnico,
-  diaSemana DATE NOT NULL,
+  diaSemana VARCHAR(20) NULL CHECK (diaSemana IN ('Domingo', 'Segunda-feira', 'Terça-feira', 'Quarda-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado')),
   PRIMARY KEY(idConserta)
 );
 
 /*-----------------------------------------------------------------------------------------------*/
+
+/*Inserts Credito*/
+INSERT INTO Credito(valor)
+values(10);
+
+INSERT INTO Credito(valor)
+values(30);
+
+INSERT INTO Credito(valor)
+values(50);
+
+INSERT INTO Credito(valor)
+values(100);
 
 /*Inserts Endereço  http://www.qualocep.com/busca-endereco//natal/RN  */
 INSERT INTO Endereco(rua, bairro, numero, CEP, cidade, UF)
@@ -245,6 +222,19 @@ values(9, 'EDENILTON JOSE DE SOUSA', '686.317.135-03', '1972-02-20', 'M');
 INSERT INTO Pessoa(idEndereco, nome, CPF, dataNascimento, sexo)
 values(10, 'EDER FERREIRA DO NASCIMENTO JÚNIOR', '976.372.912-27', '1990-07-28', 'M');
 
+/*Inserts Brinquedo */
+INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsCurrBrinquedo, preco, tipoBrinquedo)
+values('Corrida de Carros', '2015-01-04', NULL, 0, 5, 2000, 5, 1);
+
+INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsCurrBrinquedo, preco, tipoBrinquedo)
+values('Corrida de Motos', '2015-01-04', NULL, 0, 5, 2000, 5, 1);
+
+INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsCurrBrinquedo, preco, tipoBrinquedo)
+values('Sinuca', '2015-02-10', NULL, 0,NULL, NULL, 5, 0);
+
+INSERT INTO Brinquedo(descricao, dataChegada, dataUltimoUso, frequenciaUso, ticketPremioMax, ticketsCurrBrinquedo, preco, tipoBrinquedo)
+values('Ping-Pong', '2014-10-04', NULL, 0, NULL, NULL, 5, 0);
+
 /*Inserts Telefone  http://pt.fakenamegenerator.com/gen-male-br-br.php  */
 INSERT INTO Telefone(idPessoa, tipoTelefone, numero, DDD)
 values(1, 'residencial', '2006-3823', '084');
@@ -276,79 +266,56 @@ values(9, 'celular', '6206-3053', '084');
 INSERT INTO Telefone(idPessoa, tipoTelefone, numero, DDD)
 values(10, 'celular', '4034-8072', '084');
 
+
+/*Inserts Cargo*/
+INSERT INTO Cargo(descricao, salario)
+values('Gerente', 3000);
+
+INSERT INTO Cargo(descricao, salario)
+values('Balconista', 1000);
+
+INSERT INTO Cargo(descricao, salario)
+values('Operador de Brinquedo', 1000);
+
+INSERT INTO Cargo(descricao, salario)
+values('Segurança', 1500);
+
+INSERT INTO Cargo(descricao, salario)
+values('Técnico', 2000);
+
+INSERT INTO Cargo(descricao, salario)
+values('Auxiliar de serviços Gerais', 1000);
+
 /*Inserts Funcionario*/
-INSERT INTO Funcionario(idPessoa, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
-values(1, '120.23362.99-9', '2010-05-02', NULL);
+INSERT INTO Funcionario(idPessoa, idCargo, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
+values(1, 1, '120.23362.99-9', '2010-05-02', NULL);
 
-INSERT INTO Funcionario(idPessoa, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
-values(2, '102.24445.88-2', '2015-03-20', NULL);
+INSERT INTO Funcionario(idPessoa, idCargo, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
+values(2, 2, '102.24445.88-2', '2015-03-20', NULL);
 
-INSERT INTO Funcionario(idPessoa, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
-values(3, '192.90362.86-9', '2014-06-12', NULL);
+INSERT INTO Funcionario(idPessoa, idCargo, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
+values(3, 3, '192.90362.86-9', '2014-06-12', NULL);
 
-INSERT INTO Funcionario(idPessoa, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
-values(4, '936.84527.23-5', '2012-11-20', NULL);
+INSERT INTO Funcionario(idPessoa, idCargo, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
+values(4, 4,'936.84527.23-5', '2012-11-20', NULL);
 
-INSERT INTO Funcionario(idPessoa, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
-values(5, '294.04518.12-4', '2013-12-12', NULL);
+INSERT INTO Funcionario(idPessoa, idCargo, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
+values(5, 5, '294.04518.12-4', '2013-12-12', NULL);
 
-INSERT INTO Funcionario(idPessoa, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
-values(6, '274.84516.26-2', '2015-05-02', NULL);
-
-/*Inserts Gerente*/
-INSERT INTO Gerente(idFuncionario)
-values(1);
-
-/*Inserts OperadorDeBrinquedo*/
-INSERT INTO OperadorDeBrinquedo(idFuncionario)
-values(2);
-
-/*Inserts Tecnico*/
-INSERT INTO Tecnico(idFuncionario)
-values(3);
-
-/*Inserts Seguranca*/
-INSERT INTO Seguranca(idFuncionario)
-values(4);
-
-/*Inserts Balconista*/
-INSERT INTO Balconista(idFuncionario)
-values(5);
-
-/*Inserts ASG*/
-INSERT INTO ASG(idFuncionario)
-values(6);
-
-/*Inserts Salario*/
-INSERT INTO Salario(idFuncionario, valor) 
-values(6, 1000); /*ASG*/
-
-INSERT INTO Salario(idFuncionario, valor)
-values(5, 1000); /*Balsonista*/
-
-INSERT INTO Salario(idFuncionario, valor)
-values(1, 3000); /*Gerente*/
-
-INSERT INTO Salario(idFuncionario, valor)
-values(2, 1000); /*OperadorDeBrinquedo*/
-
-INSERT INTO Salario(idFuncionario, valor)
-values(4, 1500); /*Segurança*/
-
-INSERT INTO Salario(idFuncionario, valor)
-values(3, 2000); /*Tecnico*/
+INSERT INTO Funcionario(idPessoa, idCargo, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
+values(6, 6, '274.84516.26-2', '2015-05-02', NULL);
 
 /*Inserts Cliente*/
-INSERT INTO Cliente(idPessoa, dataCadatro)
+INSERT INTO Cliente(idPessoa, dataCadastro)
 values(7, '2015-03-12');
 
-INSERT INTO Cliente(idPessoa, dataCadatro)
+INSERT INTO Cliente(idPessoa, dataCadastro)
 values(8, '2012-10-22');
 
-INSERT INTO Cliente(idPessoa, dataCadatro)
+INSERT INTO Cliente(idPessoa, dataCadastro)
 values(9, '2013-06-28');
 
-INSERT INTO Cliente(idPessoa, dataCadatro)
+INSERT INTO Cliente(idPessoa, dataCadastro)
 values(10, '2014-09-30');
 
 /*Inserts Premio*/
@@ -365,26 +332,58 @@ values(1, 1, '2015-05-12');
 INSERT INTO Obter(idCliente, idPremio, dataObtencao)
 values(2, 2, '2014-10-10');
 
+/*Inserts Cartão*/
+INSERT INTO Cartao(idCliente, dataEmissao, saldo, ativo)
+values(1, '2015-05-05', 0, TRUE);
+
+INSERT INTO Cartao(idCliente, dataEmissao, saldo, ativo)
+values(2, '2015-05-30', 0, TRUE);
+
+INSERT INTO Cartao(idCliente, dataEmissao, saldo, ativo)
+values(3, '2015-02-10', 0, TRUE);
+
+INSERT INTO Cartao(idCliente, dataEmissao, saldo, ativo)
+values(4, '2015-06-05', 0, TRUE);
+
+/*Inserts Opera*/
+INSERT INTO Opera(idBrinquedo, idfuncionario, diaSemana)
+values(1, 8, 'Segunda-feira');
+
+/*Inserts Conserta*/
+INSERT INTO Conserta(idBrinquedo, idfuncionario, diaSemana)
+values(1, 10, 'Segunda-feira');
+
 /*-----------------------------------------------------------------------------------------------*/
 
-
+/* Todos valores dos créditos que podem ser comprados */
 SELECT cr.idCredito, cr.valor FROM Credito cr
+
+/* Todos os endereços */
 SELECT e.idEndereco, e.rua, e.bairro, e.numero, e.CEP, e.cidade, e.UF FROM Endereco e
+
+/* Todos os brinquedos */
 SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsCurrBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
+
+/* Todas as pessoas */
 SELECT p.idPessoa, p.idEndereco, p.nome, p.CPF, p.dataNascimento FROM Pessoa p
+
+/* Todos os telefones */
 SELECT tel.idTelefone, tel.idPessoa, tel.tipoTelefone, tel.numero, tel.DDD FROM Telefone tel
-SELECT cl.idCliente, cl.idPessoa, cl.dataCadatro FROM Cliente cl
+
+/* Todos os cliestes*/
+SELECT cl.idCliente, cl.idPessoa, cl.dataCadastro FROM Cliente cl
+
+/* Todos os cartões */
 SELECT ca.idCartao, ca.idCliente, ca.dataEmissao, ca.saldo, ca.ativo FROM Cartao ca
+
+/* Todos os funcionários*/
 SELECT f.idFuncionario, f.idPessoa, f.numCarteiraDeTrabalho,f.dataAdmissao, f.dataDemissao FROM Funcionario f
+
+/* Todas as compras*/
 SELECT cc.idCompraCredito, cc.idCredito, cc.idCartao, cc.dataCompra FROM CompraCredito cc
+
+/* Todos os débitos*/
 SELECT d.idDebito, d.idBrinquedo, d.idCartao, d.dataDebito FROM Debito d
-SELECT pr.idPremio, pr.idCliente, pr.descricao, pr.qntTickets FROM Premio pr
-SELECT g.idGerente, g.idFuncionario FROM Gerente g
-SELECT ob.idOperadorDeBrinquedo, ob.idFuncionario FROM OperadorDeBrinquedo ob
-SELECT tec.idSuporteTecnico, tec.idFuncionario FROM Tecnico tec
-SELECT sa.idSalario, sa.idFuncionario, sa.valor FROM Salario sa
-SELECT se.idSeguranca, se.idFuncionario FROM Seguranca se
-SELECT ba.idBalconista, ba.idFuncionario FROM Balconista ba
-SELECT asg.idASG, asg.idFuncionario FROM ASG asg
-SELECT op.idOpera, op.idBrinquedo, op.idFuncionario,op.idOperadorDeBrinquedo, op.diaSemana FROM Opera op
-SELECT co.idConserta, co.idBrinquedo, co.idFuncionario,co.idSuporteTecnico, co.diaSemana FROM Conserta co
+
+/* Todos os premios*/
+SELECT pr.idPremio, pr.descricao, pr.qntTickets FROM Premio pr
