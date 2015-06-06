@@ -360,28 +360,20 @@ SELECT cr.idCredito, cr.valor FROM Credito cr
 
 /* Todos os endereços */
 SELECT e.idEndereco, e.rua, e.bairro, e.numero, e.CEP, e.cidade, e.UF FROM Endereco e
-<<<<<<< HEAD
-SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsAttBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
-=======
 
 /* Todos os brinquedos */
 SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsCurrBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
 
 /* Todas as pessoas */
->>>>>>> f701967a49265a4eb0e0f275ea9034a7a1d594f9
 SELECT p.idPessoa, p.idEndereco, p.nome, p.CPF, p.dataNascimento FROM Pessoa p
 
 /* Todos os telefones */
 SELECT tel.idTelefone, tel.idPessoa, tel.tipoTelefone, tel.numero, tel.DDD FROM Telefone tel
-<<<<<<< HEAD
-SELECT cl.idCliente, cl.idPessoa, cl.dataCadastro FROM Cliente cl
-=======
 
 /* Todos os clientes*/
 SELECT cl.idCliente, cl.idPessoa, cl.dataCadastro FROM Cliente cl
 
 /* Todos os cartões */
->>>>>>> f701967a49265a4eb0e0f275ea9034a7a1d594f9
 SELECT ca.idCartao, ca.idCliente, ca.dataEmissao, ca.saldo, ca.ativo FROM Cartao ca
 
 /* Todos os funcionários*/
@@ -392,20 +384,6 @@ SELECT cc.idCompraCredito, cc.idCredito, cc.idCartao, cc.dataCompra FROM CompraC
 
 /* Todos os débitos*/
 SELECT d.idDebito, d.idBrinquedo, d.idCartao, d.dataDebito FROM Debito d
-<<<<<<< HEAD
-SELECT pr.idPremio, pr.descricao, pr.qntTickets FROM Premio pr
-SELECT obt.idObter, obt.idCliente, obt.idPremio, obt.dataObtencao FROM Obter obt
-SELECT g.idGerente, g.idFuncionario FROM Gerente g
-SELECT ob.idOperadorDeBrinquedo, ob.idFuncionario FROM OperadorDeBrinquedo ob
-SELECT tec.idSuporteTecnico, tec.idFuncionario FROM Tecnico tec
-SELECT sa.idSalario, sa.idFuncionario, sa.valor FROM Salario sa
-SELECT se.idSeguranca, se.idFuncionario FROM Seguranca se
-SELECT ba.idBalconista, ba.idFuncionario FROM Balconista ba
-SELECT asg.idASG, asg.idFuncionario FROM ASG asg
-SELECT op.idOpera, op.idBrinquedo, op.idFuncionario,op.idOperadorDeBrinquedo, op.diaSemana FROM Opera op
-SELECT co.idConserta, co.idBrinquedo, co.idFuncionario,co.idSuporteTecnico, co.diaSemana FROM Conserta co
-=======
 
 /* Todos os premios*/
 SELECT pr.idPremio, pr.descricao, pr.qntTickets FROM Premio pr
->>>>>>> f701967a49265a4eb0e0f275ea9034a7a1d594f9
