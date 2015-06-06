@@ -23,7 +23,7 @@ CREATE TABLE Brinquedo (
   dataUltimoUso DATE NULL,
   frequenciaUso INTEGER NOT NULL,
   ticketPremioMax INTEGER NULL,
-  ticketsCurrBrinquedo INTEGER NULL,
+  ticketsAttBrinquedo INTEGER NULL,
   preco REAL NOT NULL,
   tipoBrinquedo CHAR NULL,
   PRIMARY KEY(idBrinquedo)
@@ -54,7 +54,7 @@ CREATE TABLE Telefone (
 CREATE TABLE Cliente (
   idCliente SERIAL NOT NULL,
   idPessoa INTEGER NOT NULL REFERENCES Pessoa,
-  dataCadatro DATE NOT NULL, /*correção de erro -> cadatro - cadastro*/
+  dataCadastro DATE NOT NULL,
   PRIMARY KEY(idCliente)
 );
 
@@ -71,7 +71,7 @@ CREATE TABLE Cartao (
 CREATE TABLE Funcionario (
   idFuncionario SERIAL NOT NULL,
   idPessoa INTEGER NOT NULL REFERENCES Pessoa,
-  numCarteiraDeTrabalho VARCHAR(20) NOT NULL,
+  numCarteiraDeTrabalho VARCHAR(20) NOT NULL UNIQUE,
   dataAdmissao DATE NOT NULL,
   dataDemissao DATE NULL,
   PRIMARY KEY(idFuncionario)
@@ -339,16 +339,16 @@ INSERT INTO Salario(idFuncionario, valor)
 values(3, 2000); /*Tecnico*/
 
 /*Inserts Cliente*/
-INSERT INTO Cliente(idPessoa, dataCadatro)
+INSERT INTO Cliente(idPessoa, dataCadastro)
 values(7, '2015-03-12');
 
-INSERT INTO Cliente(idPessoa, dataCadatro)
+INSERT INTO Cliente(idPessoa, dataCadastro)
 values(8, '2012-10-22');
 
-INSERT INTO Cliente(idPessoa, dataCadatro)
+INSERT INTO Cliente(idPessoa, dataCadastro)
 values(9, '2013-06-28');
 
-INSERT INTO Cliente(idPessoa, dataCadatro)
+INSERT INTO Cliente(idPessoa, dataCadastro)
 values(10, '2014-09-30');
 
 /*Inserts Premio*/
@@ -370,15 +370,16 @@ values(2, 2, '2014-10-10');
 
 SELECT cr.idCredito, cr.valor FROM Credito cr
 SELECT e.idEndereco, e.rua, e.bairro, e.numero, e.CEP, e.cidade, e.UF FROM Endereco e
-SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsCurrBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
+SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsAttBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
 SELECT p.idPessoa, p.idEndereco, p.nome, p.CPF, p.dataNascimento FROM Pessoa p
 SELECT tel.idTelefone, tel.idPessoa, tel.tipoTelefone, tel.numero, tel.DDD FROM Telefone tel
-SELECT cl.idCliente, cl.idPessoa, cl.dataCadatro FROM Cliente cl
+SELECT cl.idCliente, cl.idPessoa, cl.dataCadastro FROM Cliente cl
 SELECT ca.idCartao, ca.idCliente, ca.dataEmissao, ca.saldo, ca.ativo FROM Cartao ca
 SELECT f.idFuncionario, f.idPessoa, f.numCarteiraDeTrabalho,f.dataAdmissao, f.dataDemissao FROM Funcionario f
 SELECT cc.idCompraCredito, cc.idCredito, cc.idCartao, cc.dataCompra FROM CompraCredito cc
 SELECT d.idDebito, d.idBrinquedo, d.idCartao, d.dataDebito FROM Debito d
-SELECT pr.idPremio, pr.idCliente, pr.descricao, pr.qntTickets FROM Premio pr
+SELECT pr.idPremio, pr.descricao, pr.qntTickets FROM Premio pr
+SELECT obt.idObter, obt.idCliente, obt.idPremio, obt.dataObtencao FROM Obter obt
 SELECT g.idGerente, g.idFuncionario FROM Gerente g
 SELECT ob.idOperadorDeBrinquedo, ob.idFuncionario FROM OperadorDeBrinquedo ob
 SELECT tec.idSuporteTecnico, tec.idFuncionario FROM Tecnico tec
