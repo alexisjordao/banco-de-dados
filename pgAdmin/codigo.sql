@@ -387,3 +387,15 @@ SELECT d.idDebito, d.idBrinquedo, d.idCartao, d.dataDebito FROM Debito d
 
 /* Todos os premios*/
 SELECT pr.idPremio, pr.descricao, pr.qntTickets FROM Premio pr
+
+/*-----------------------------------------------------------------------------------------------*/
+
+/*Indice para tabela Pessoa (idPessoa)*/
+CREATE INDEX index_hash ON Pessoa USING HASH (idPessoa);
+
+EXPLAIN ANALYSE SELECT * FROM Pessoa WHERE idPessoa = 10;
+
+/*Indice para tabela Cargo (salario)*/
+CREATE INDEX index_btree ON Cargo USING HASH (salario);
+
+EXPLAIN ANALYSE SELECT * FROM Cargo WHERE salario BETWEEN 2000 AND 3000;
