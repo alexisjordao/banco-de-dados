@@ -389,3 +389,12 @@ SELECT d.idDebito, d.idBrinquedo, d.idCartao, d.dataDebito FROM Debito d
 
 /* Todos os premios*/
 SELECT pr.idPremio, pr.descricao, pr.qntTickets FROM Premio pr
+
+/* Todos os premios obtidos*/
+SELECT obt.idObter, obt.idCliente, obt.idPremio,  obt.dataObtencao FROM Obter obt
+
+/* Todos os funcionários que operam brinquedos*/
+SELECT op.idOpera, op.idBrinquedo, op.idFuncionario, op.diaSemana FROM Opera op
+
+/* Todos os funcionários que consertam brinquedos*/
+SELECT co.idConserta, co.idBrinquedo, co.idFuncionario, co.diaSemana FROM Conserta co
