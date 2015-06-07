@@ -36,7 +36,7 @@ CREATE TABLE Pessoa (
   idPessoa SERIAL NOT NULL,
   idEndereco INTEGER NOT NULL REFERENCES Endereco,
   nome VARCHAR(60) NOT NULL,
-  CPF VARCHAR(15) NOT NULL UNIQUE,
+  CPF VARCHAR(11) NOT NULL UNIQUE,
   dataNascimento DATE NOT NULL,
   sexo CHAR(1) CHECK (sexo='M' or sexo='F'),
   PRIMARY KEY(idPessoa)
