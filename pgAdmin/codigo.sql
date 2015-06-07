@@ -418,7 +418,8 @@ BEGIN
 IF NEW.valor < 0 OR NEW.valor IS NULL THEN
 RAISE EXCEPTION 'O valor não pode ser negativo ou nulo';
 END IF;
-END
+RETURN NEW;
+END;
 $credito_gatilho$ LANGUAGE plpgsql;
 
 CREATE TRIGGER credito_gatilho BEFORE INSERT OR UPDATE
@@ -456,6 +457,7 @@ END IF;
 IF NEW.preco < 0 OR NEW.preco IS NULL THEN
 RAISE EXCEPTION 'O preço do brinquedo não pode ser negativo ou nulo';
 END IF;
+RETURN NEW;
 END;
 $brinquedo_gatilho$ LANGUAGE plpgsql;
 
@@ -473,7 +475,8 @@ END IF;
 IF NEW.dataCadastro <> current_date THEN
 RAISE EXCEPTION 'A data de cadastro não pode ser diferente do dia de hoje';
 END IF;
-END
+RETURN NEW;
+END;
 $cliente_gatilho$ LANGUAGE plpgsql;
 
 CREATE TRIGGER cliente_gatilho BEFORE INSERT OR UPDATE
@@ -496,7 +499,8 @@ END IF;
 IF NEW.ativo IS NULL THEN
 RAISE EXCEPTION 'O cartão precisa está ativo ou desativado';
 END IF;
-END
+RETURN NEW;
+END;
 $cartao_gatilho$ LANGUAGE plpgsql;
 
 CREATE TRIGGER cartao_gatilho BEFORE INSERT OR UPDATE
@@ -519,7 +523,8 @@ END IF;
 IF NEW.dataDemissao < NEW.dataAdmissao THEN
 RAISE EXCEPTION 'A data de demissão não pode ser anterior a data de admissão';
 END IF;
-END
+RETURN NEW;
+END;
 $funcionario_gatilho$ LANGUAGE plpgsql;
 
 CREATE TRIGGER funcionario_gatilho BEFORE INSERT OR UPDATE
@@ -556,7 +561,8 @@ END IF;
 IF NEW.dataCompra <> current_date THEN
 RAISE EXCEPTION 'A data de compra não pode ser diferente do dia de hoje';
 END IF;
-END
+RETURN NEW;
+END;
 $compracredito_gatilho$ LANGUAGE plpgsql;
 
 CREATE TRIGGER compracredito_gatilho BEFORE INSERT OR UPDATE
@@ -573,7 +579,8 @@ END IF;
 IF NEW.dataDebito <> current_date THEN
 RAISE EXCEPTION 'A data de débito não pode ser diferente do dia de hoje';
 END IF;
-END
+RETURN NEW;
+END;
 $debito_gatilho$ LANGUAGE plpgsql;
 
 CREATE TRIGGER debito_gatilho BEFORE INSERT OR UPDATE
@@ -590,7 +597,8 @@ END IF;
 IF NEW.qntTickets <= 0 OR NEW.qntTickets IS NULL THEN
 RAISE EXCEPTION 'A quantidade de tickets não pode ser negativo ou nulo';
 END IF;
-END
+RETURN NEW;
+END;
 $premio_gatilho$ LANGUAGE plpgsql;
 
 CREATE TRIGGER premio_gatilho BEFORE INSERT OR UPDATE
@@ -607,7 +615,8 @@ END IF;
 IF NEW.dataObtencao <> current_date THEN
 RAISE EXCEPTION 'A data de obtenção não pode ser diferente do dia de hoje';
 END IF;
-END
+RETURN NEW;
+END;
 $obter_gatilho$ LANGUAGE plpgsql;
 
 CREATE TRIGGER obter_gatilho BEFORE INSERT OR UPDATE
