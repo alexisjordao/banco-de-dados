@@ -412,26 +412,19 @@ CREATE INDEX index_btree ON Cargo USING HASH (salario);
 EXPLAIN ANALYSE SELECT * FROM Cargo WHERE salario BETWEEN 2000 AND 3000;
 
 /*-----------------------------------------------------------------------------------------------*/
-
-/*Regra de negócio para a tabela cargo*/
-CREATE FUNCTION cargo_gatilho() RETURNS trigger AS $cargo_gatilho$
+/*Regra de negócio para a tabela credito*/
+CREATE FUNCTION credito_gatilho() RETURNS trigger AS $credito_gatilho$
 BEGIN
-IF NEW.descricao IS NULL THEN
-RAISE EXCEPTION 'A descrição do cargo não pode ser nulo';
+IF NEW.valor < 0 OR NEW.valor IS NULL THEN
+RAISE EXCEPTION 'O valor não pode ser negativo ou nulo';
 END IF;
-IF NEW.salario < 788 THEN
-RAISE EXCEPTION 'O salário não pode ser menor que o salário mínimo';
-END IF;
-NEW.ultima_data := 'now';
-NEW.ultimo_usuario := current_user;
-RETURN NEW;
-END;
-$cargo_gatilho$ LANGUAGE plpgsql;
+END
+$credito_gatilho$ LANGUAGE plpgsql;
 
-CREATE TRIGGER cargo_gatilho BEFORE INSERT OR UPDATE
-ON cargo
+CREATE TRIGGER credito_gatilho BEFORE INSERT OR UPDATE
+ON credito
 FOR EACH ROW EXECUTE
-PROCEDURE cargo_gatilho();
+PROCEDURE credito_gatilho();
 
 /*Regra de negócio para a tabela brinquedo*/
 CREATE FUNCTION brinquedo_gatilho() RETURNS trigger AS $brinquedo_gatilho$
@@ -443,7 +436,7 @@ IF NEW.dataChegada IS NULL THEN
 RAISE EXCEPTION 'A data de chegada do brinquedo não pode ser nulo';
 END IF;
 IF NEW.dataChegada > current_date THEN
-RAISE EXCEPTION 'A data de chegada do brinquedo não ser depois de hoje';
+RAISE EXCEPTION 'A data de chegada do brinquedo não pode ser depois de hoje';
 END IF;
 IF NEW.dataUltimoUso < NEW.dataChegada THEN
 RAISE EXCEPTION 'A data de último uso não pode ser anterior que a data de chegada do brinquedo';
@@ -470,3 +463,23 @@ CREATE TRIGGER brinquedo_gatilho BEFORE INSERT OR UPDATE
 ON brinquedo
 FOR EACH ROW EXECUTE
 PROCEDURE brinquedo_gatilho();
+
+/*Regra de negócio para a tabela cargo*/
+CREATE FUNCTION cargo_gatilho() RETURNS trigger AS $cargo_gatilho$
+BEGIN
+IF NEW.descricao IS NULL THEN
+RAISE EXCEPTION 'A descrição do cargo não pode ser nulo';
+END IF;
+IF NEW.salario < 788 THEN
+RAISE EXCEPTION 'O salário não pode ser menor que o salário mínimo';
+END IF;
+NEW.ultima_data := 'now';
+NEW.ultimo_usuario := current_user;
+RETURN NEW;
+END;
+$cargo_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER cargo_gatilho BEFORE INSERT OR UPDATE
+ON cargo
+FOR EACH ROW EXECUTE
+PROCEDURE cargo_gatilho();
