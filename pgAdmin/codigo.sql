@@ -73,7 +73,7 @@ CREATE TABLE Cartao (
 /*Inserts OK*/
 CREATE TABLE Cargo(
   idCargo SERIAL NOT NULL,
-  descricao VARCHAR(60) UNIQUE,
+  descricao VARCHAR(60) UNIQUE CHECK (descricao IN ('Gerente', 'Recepcionista', 'Operador de Brinquedo', 'Segurança', 'Técnico', 'Auxiliar de Serviços Gerais')),
   salario REAL NOT NULL,
   PRIMARY KEY(idCargo)
 );
