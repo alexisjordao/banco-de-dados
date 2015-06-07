@@ -523,3 +523,71 @@ CREATE TRIGGER cargo_gatilho BEFORE INSERT OR UPDATE
 ON cargo
 FOR EACH ROW EXECUTE
 PROCEDURE cargo_gatilho();
+
+/*Regra de negócio para a tabela CompraCredito*/
+CREATE FUNCTION compracredito_gatilho() RETURNS trigger AS $compracredito_gatilho$
+BEGIN
+IF NEW.dataCompra IS NULL THEN
+RAISE EXCEPTION 'A data de compra não pode ser nulo';
+END IF;
+IF NEW.dataCompra <> current_date THEN
+RAISE EXCEPTION 'A data de compra não pode ser diferente do dia de hoje';
+END IF;
+END
+$compracredito_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER compracredito_gatilho BEFORE INSERT OR UPDATE
+ON compraCredito
+FOR EACH ROW EXECUTE
+PROCEDURE compracredito_gatilho();
+
+/*Regra de negócio para a tabela Debito*/
+CREATE FUNCTION debito_gatilho() RETURNS trigger AS $debito_gatilho$
+BEGIN
+IF NEW.dataDebito IS NULL THEN
+RAISE EXCEPTION 'A data de débito não pode ser nulo';
+END IF;
+IF NEW.dataDebito <> current_date THEN
+RAISE EXCEPTION 'A data de débito não pode ser diferente do dia de hoje';
+END IF;
+END
+$debito_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER debito_gatilho BEFORE INSERT OR UPDATE
+ON Debito
+FOR EACH ROW EXECUTE
+PROCEDURE debito_gatilho();
+
+/*Regra de negócio para a tabela Premio*/
+CREATE FUNCTION premio_gatilho() RETURNS trigger AS $premio_gatilho$
+BEGIN
+IF NEW.descricao IS NULL THEN
+RAISE EXCEPTION 'A descrição não pode ser nulo';
+END IF;
+IF NEW.qntTickets <= 0 OR NEW.qntTickets IS NULL THEN
+RAISE EXCEPTION 'A quantidade de tickets não pode ser negativo ou nulo';
+END IF;
+END
+$premio_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER premio_gatilho BEFORE INSERT OR UPDATE
+ON Premio
+FOR EACH ROW EXECUTE
+PROCEDURE premio_gatilho();
+
+/*Regra de negócio para a tabela Obter*/
+CREATE FUNCTION obter_gatilho() RETURNS trigger AS $obter_gatilho$
+BEGIN
+IF NEW.dataObtencao IS NULL THEN
+RAISE EXCEPTION 'A data de obtenção não pode ser nulo';
+END IF;
+IF NEW.dataObtencao <> current_date THEN
+RAISE EXCEPTION 'A data de obtenção não pode ser diferente do dia de hoje';
+END IF;
+END
+$obter_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER obter_gatilho BEFORE INSERT OR UPDATE
+ON Obter
+FOR EACH ROW EXECUTE
+PROCEDURE obter_gatilho();
