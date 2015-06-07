@@ -361,7 +361,6 @@ SELECT cr.idCredito, cr.valor FROM Credito cr
 SELECT e.idEndereco, e.rua, e.bairro, e.numero, e.CEP, e.cidade, e.UF FROM Endereco e
 
 /* Todos os brinquedos */
-
 SELECT b.idBrinquedo, b.descricao, b.dataChegada, b.dataUltimoUso, b.frequenciaUso, b.ticketPremioMax, b.ticketsAttBrinquedo, b.preco, b.tipoBrinquedo FROM Brinquedo b
 
 /* Todas as pessoas */
@@ -411,3 +410,25 @@ EXPLAIN ANALYSE SELECT * FROM Pessoa WHERE idPessoa = 10;
 CREATE INDEX index_btree ON Cargo USING HASH (salario);
 
 EXPLAIN ANALYSE SELECT * FROM Cargo WHERE salario BETWEEN 2000 AND 3000;
+
+/*-----------------------------------------------------------------------------------------------*/
+
+/*Regra de negócio para a tabela cargo*/
+CREATE FUNCTION cargo_gatilho() RETURNS trigger AS $cargo_gatilho$
+BEGIN
+IF NEW.descricao IS NULL THEN
+RAISE EXCEPTION 'A descrição do cargo não pode ser nulo';
+END IF;
+IF NEW.salario < 788 THEN
+RAISE EXCEPTION 'O salário não pode ser menor que o salário mínimo';
+END IF;
+NEW.ultima_data := 'now';
+NEW.ultimo_usuario := current_user;
+RETURN NEW;
+END;
+$cargo_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER cargo_gatilho BEFORE INSERT OR UPDATE
+ON cargo
+FOR EACH ROW EXECUTE
+PROCEDURE cargo_gatilho();
