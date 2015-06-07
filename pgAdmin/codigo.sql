@@ -432,3 +432,41 @@ CREATE TRIGGER cargo_gatilho BEFORE INSERT OR UPDATE
 ON cargo
 FOR EACH ROW EXECUTE
 PROCEDURE cargo_gatilho();
+
+/*Regra de negócio para a tabela brinquedo*/
+CREATE FUNCTION brinquedo_gatilho() RETURNS trigger AS $brinquedo_gatilho$
+BEGIN
+IF NEW.descricao IS NULL THEN
+RAISE EXCEPTION 'A descrição do brinquedo não pode ser nulo';
+END IF;
+IF NEW.dataChegada IS NULL THEN
+RAISE EXCEPTION 'A data de chegada do brinquedo não pode ser nulo';
+END IF;
+IF NEW.dataChegada > current_date THEN
+RAISE EXCEPTION 'A data de chegada do brinquedo não ser depois de hoje';
+END IF;
+IF NEW.dataUltimoUso < NEW.dataChegada THEN
+RAISE EXCEPTION 'A data de último uso não pode ser anterior que a data de chegada do brinquedo';
+END IF;
+IF NEW.frequenciaUso < 0 OR NEW.frequenciaUso IS NULL THEN
+RAISE EXCEPTION 'A frequencia de uso não pode ser negativa ou nula';
+END IF;
+IF NEW.ticketPremioMax < 0 OR NEW.ticketPremioMax IS NULL THEN
+RAISE EXCEPTION 'A quantidade de tickets máxima não pode ser negativa ou nulo';
+END IF;
+IF NEW.ticketPremioMax > NEW.ticketsAttBrinquedo THEN
+RAISE EXCEPTION 'A quantidade de tickets máxima não pode ser mais do que tem no brinquedo';
+END IF;
+IF NEW.ticketsAttBrinquedo  < 0 OR NEW.ticketsAttBrinquedo IS NULL THEN
+RAISE EXCEPTION 'A quantidade de tickets no brinquedo não pode ser negativa ou nula';
+END IF;
+IF NEW.preco < 0 OR NEW.preco IS NULL THEN
+RAISE EXCEPTION 'O preço do brinquedo não pode ser negativo ou nulo';
+END IF;
+END;
+$brinquedo_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER brinquedo_gatilho BEFORE INSERT OR UPDATE
+ON brinquedo
+FOR EACH ROW EXECUTE
+PROCEDURE brinquedo_gatilho();
