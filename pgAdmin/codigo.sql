@@ -464,6 +464,46 @@ ON brinquedo
 FOR EACH ROW EXECUTE
 PROCEDURE brinquedo_gatilho();
 
+/*Regra de negócio para a tabela cliente*/
+CREATE FUNCTION cliente_gatilho() RETURNS trigger AS $cliente_gatilho$
+BEGIN
+IF NEW.dataCadastro IS NULL THEN
+RAISE EXCEPTION 'A data de cadastro não pode ser nulo';
+END IF;
+IF NEW.dataCadastro <> current_date THEN
+RAISE EXCEPTION 'A data de cadastro não pode ser diferente do dia de hoje';
+END IF;
+END
+$cliente_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER cliente_gatilho BEFORE INSERT OR UPDATE
+ON cliente
+FOR EACH ROW EXECUTE
+PROCEDURE cliente_gatilho();
+
+/*Regra de negócio para a tabela cartão*/
+CREATE FUNCTION cartao_gatilho() RETURNS trigger AS $cartao_gatilho$
+BEGIN
+IF NEW.dataEmissao IS NULL THEN
+RAISE EXCEPTION 'A data de emissão não pode ser nulo';
+END IF;
+IF NEW.dataEmissao > current_date THEN
+RAISE EXCEPTION 'A data de emissão não pode ser depois ao dia de hoje';
+END IF;
+IF NEW.saldo < 0 OR NEW.saldo IS NULL THEN
+RAISE EXCEPTION 'O saldo não pode ser negativo ou nulo';
+END IF;
+IF NEW.ativo IS NULL THEN
+RAISE EXCEPTION 'O cartão precisa está ativo ou desativado';
+END IF;
+END
+$cartao_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER cartao_gatilho BEFORE INSERT OR UPDATE
+ON cartao
+FOR EACH ROW EXECUTE
+PROCEDURE cartao_gatilho();
+
 /*Regra de negócio para a tabela cargo*/
 CREATE FUNCTION cargo_gatilho() RETURNS trigger AS $cargo_gatilho$
 BEGIN
