@@ -504,6 +504,29 @@ ON cartao
 FOR EACH ROW EXECUTE
 PROCEDURE cartao_gatilho();
 
+/*Regra de negócio para a tabela Funcionario*/
+CREATE FUNCTION funcionario_gatilho() RETURNS trigger AS $funcionario_gatilho$
+BEGIN
+IF NEW.numCarteiraDeTrabalho IS NULL THEN
+RAISE EXCEPTION 'O número da carteira de trabalho não pode ser nulo';
+END IF;
+IF NEW.dataAdmissao IS NULL THEN
+RAISE EXCEPTION 'A data de admissão não pode ser nulo';
+END IF;
+IF NEW.dataAdmissao > current_date THEN
+RAISE EXCEPTION 'A data de admissão não pode ser posterior a data atual';
+END IF;
+IF NEW.dataDemissao < NEW.dataAdmissao THEN
+RAISE EXCEPTION 'A data de demissão não pode ser anterior a data de admissão';
+END IF;
+END
+$funcionario_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER funcionario_gatilho BEFORE INSERT OR UPDATE
+ON Funcionario
+FOR EACH ROW EXECUTE
+PROCEDURE funcionario_gatilho();
+
 /*Regra de negócio para a tabela cargo*/
 CREATE FUNCTION cargo_gatilho() RETURNS trigger AS $cargo_gatilho$
 BEGIN
