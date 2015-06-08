@@ -108,11 +108,18 @@ CREATE TABLE Debito (
 );
 
 /*Inserts OK*/
-CREATE TABLE Premio (
+CREATE TABLE ItemPremio (
   idPremio SERIAL NOT NULL,
+  idEstoquePremio INTEGER NOT NULL REFERENCES EstoquePremio
   descricao VARCHAR(60) NOT NULL,
   qntTickets INTEGER NOT NULL,
   PRIMARY KEY(idPremio)
+);
+
+CREATE TABLE EstoquePremio (
+  idEstoquePremio SERIAL NOT NULL,
+  quantidadePremio INTEGER NOT NULL,
+  PRIMARY KEY(idEstoquePremio)
 );
 
 /*Inserts OK*/
