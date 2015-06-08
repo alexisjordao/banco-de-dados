@@ -595,8 +595,8 @@ ON Debito
 FOR EACH ROW EXECUTE
 PROCEDURE debito_gatilho();
 
-/*Regra de negócio para a tabela Premio*/
-CREATE FUNCTION premio_gatilho() RETURNS trigger AS $premio_gatilho$
+/*Regra de negócio para a tabela ItemPremio*/
+CREATE FUNCTION itempremio_gatilho() RETURNS trigger AS $itempremio_gatilho$
 BEGIN
 IF NEW.descricao IS NULL THEN
 RAISE EXCEPTION 'A descrição não pode ser nulo';
@@ -606,12 +606,12 @@ RAISE EXCEPTION 'A quantidade de tickets não pode ser negativo ou nulo';
 END IF;
 RETURN NEW;
 END;
-$premio_gatilho$ LANGUAGE plpgsql;
+$itempremio_gatilho$ LANGUAGE plpgsql;
 
-CREATE TRIGGER premio_gatilho BEFORE INSERT OR UPDATE
-ON Premio
+CREATE TRIGGER itempremio_gatilho BEFORE INSERT OR UPDATE
+ON ItemPremio
 FOR EACH ROW EXECUTE
-PROCEDURE premio_gatilho();
+PROCEDURE itempremio_gatilho();
 
 /*Regra de negócio para a tabela Obter*/
 CREATE FUNCTION obter_gatilho() RETURNS trigger AS $obter_gatilho$
