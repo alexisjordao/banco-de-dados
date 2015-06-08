@@ -36,7 +36,7 @@ CREATE TABLE Pessoa (
   idPessoa SERIAL NOT NULL,
   idEndereco INTEGER NOT NULL REFERENCES Endereco,
   nome VARCHAR(60) NOT NULL,
-  CPF VARCHAR(11) NOT NULL UNIQUE,
+  CPF VARCHAR(15) NOT NULL UNIQUE,
   dataNascimento DATE NOT NULL,
   sexo CHAR(1) CHECK (sexo='M' or sexo='F'),
   PRIMARY KEY(idPessoa)
@@ -107,26 +107,27 @@ CREATE TABLE Debito (
   PRIMARY KEY(idDebito)
 );
 
-/*Inserts OK*/
-CREATE TABLE ItemPremio (
-  idPremio SERIAL NOT NULL,
-  idEstoquePremio INTEGER NOT NULL REFERENCES EstoquePremio
-  descricao VARCHAR(60) NOT NULL,
-  qntTickets INTEGER NOT NULL,
-  PRIMARY KEY(idPremio)
-);
-
 CREATE TABLE EstoquePremio (
   idEstoquePremio SERIAL NOT NULL,
-  quantidadePremio INTEGER NOT NULL,
+  quantidadeItemPremio INTEGER NOT NULL,
   PRIMARY KEY(idEstoquePremio)
 );
+
+/*Inserts OK*/
+CREATE TABLE ItemPremio (
+  idItemPremio SERIAL NOT NULL,
+  idEstoquePremio INTEGER NOT NULL REFERENCES EstoquePremio,
+  descricao VARCHAR(60) NOT NULL,
+  qntTickets INTEGER NOT NULL,
+  PRIMARY KEY(idItemPremio)
+);
+
 
 /*Inserts OK*/
 CREATE TABLE Obter (
   idObter SERIAL NOT NULL,
   idCliente INTEGER NOT NULL REFERENCES Cliente,
-  idPremio INTEGER NOT NULL REFERENCES Premio,
+  idItemPremio INTEGER NOT NULL REFERENCES ItemPremio,
   dataObtencao DATE NOT NULL,
   PRIMARY KEY(idObter)
 );
@@ -290,7 +291,7 @@ INSERT INTO Cargo(descricao, salario)
 values('Técnico', 2000);
 
 INSERT INTO Cargo(descricao, salario)
-values('Auxiliar de serviços Gerais', 1000);
+values('Auxiliar de Serviços Gerais', 1000);
 
 /*Inserts Funcionario*/
 INSERT INTO Funcionario(idPessoa, idCargo, numCarteiraDeTrabalho, dataAdmissao, dataDemissao)
@@ -325,17 +326,24 @@ INSERT INTO Cliente(idPessoa, dataCadastro)
 values(10, '2014-09-30');
 
 /*Inserts Premio*/
-INSERT INTO Premio(descricao, qntTickets)
-values('Bola de Futebol', 100);
+INSERT INTO EstoquePremio(quantidadeItemPremio)
+values(20);
 
-INSERT INTO Premio(descricao, qntTickets)
-values('Camisa Personalizada', 150);
+INSERT INTO EstoquePremio(quantidadeItemPremio)
+values(10);
+
+/*Inserts Premio*/
+INSERT INTO ItemPremio(idEstoquePremio, descricao, qntTickets)
+values(1, 'Bola de Futebol', 100);
+
+INSERT INTO ItemPremio(idEstoquePremio, descricao, qntTickets)
+values(2, 'Camisa Personalizada', 150);
 
 /*Inserts Obter*/
-INSERT INTO Obter(idCliente, idPremio, dataObtencao)
+INSERT INTO Obter(idCliente, idItemPremio, dataObtencao)
 values(1, 1, '2015-05-12');
 
-INSERT INTO Obter(idCliente, idPremio, dataObtencao)
+INSERT INTO Obter(idCliente, idItemPremio, dataObtencao)
 values(2, 2, '2014-10-10');
 
 /*Inserts Cartão*/
@@ -664,3 +672,5 @@ values(1, 1, current_date);
 UPDATE Cartao SET saldo = saldo - (SELECT preco FROM Brinquedo WHERE idBrinquedo = 1)
 WHERE idCliente = 1;
 COMMIT;
+
+--AHL--V.1
