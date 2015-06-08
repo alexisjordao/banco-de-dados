@@ -624,10 +624,10 @@ PROCEDURE itempremio_gatilho();
 /*Regra de negócio para a tabela EstoquePremio*/
 CREATE FUNCTION estoquepremio_gatilho() RETURNS trigger AS $estoquepremio_gatilho$
 BEGIN
-IF NEW.quantidadePremio < 0 THEN
+IF NEW.quantidadeItemPremio < 0 THEN
 RAISE EXCEPTION 'A quantidade de prêmio não pode ser negativa';
 END IF;
-IF NEW.quantidadePremio IS NULL THEN
+IF NEW.quantidadeItemPremio IS NULL THEN
 RAISE EXCEPTION 'A quantidade de prêmio não pode ser nula';
 END IF;
 RETURN NEW;
@@ -673,4 +673,13 @@ UPDATE Cartao SET saldo = saldo - (SELECT preco FROM Brinquedo WHERE idBrinquedo
 WHERE idCliente = 1;
 COMMIT;
 
---AHL--V.1
+/*Obtenção de prêmio*/
+BEGIN;
+INSERT INTO Obter(idCliente, idItemPremio, dataObtencao)
+values(2, 1, current_date);
+UPDATE EstoquePremio SET quantidadeItemPremio = quantidadeItemPremio - 1
+FROM ItemPremio 
+WHERE ItemPremio.idItemPremio = 1 AND EstoquePremio.idEstoquePremio = ItemPremio.idEstoquePremio;
+COMMIT;
+
+--AHL--V.2
