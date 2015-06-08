@@ -623,3 +623,19 @@ CREATE TRIGGER obter_gatilho BEFORE INSERT OR UPDATE
 ON Obter
 FOR EACH ROW EXECUTE
 PROCEDURE obter_gatilho();
+
+/*Compra crédito*/
+BEGIN;
+INSERT INTO CompraCredito(idCredito, idCartao, dataCompra)
+values(1, 1, current_date);
+UPDATE Cartao SET saldo = saldo + (SELECT valor FROM Credito WHERE idCredito = 1)
+WHERE idCliente = 1;
+COMMIT;
+
+/*Debita saldo*/
+BEGIN;
+INSERT INTO Debito(idBrinquedo, idCartao, dataDebito)
+values(1, 1, current_date);
+UPDATE Cartao SET saldo = saldo - (SELECT preco FROM Brinquedo WHERE idBrinquedo = 1)
+WHERE idCliente = 1;
+COMMIT;
