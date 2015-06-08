@@ -613,6 +613,24 @@ ON ItemPremio
 FOR EACH ROW EXECUTE
 PROCEDURE itempremio_gatilho();
 
+/*Regra de negócio para a tabela EstoquePremio*/
+CREATE FUNCTION estoquepremio_gatilho() RETURNS trigger AS $estoquepremio_gatilho$
+BEGIN
+IF NEW.quantidadePremio < 0 THEN
+RAISE EXCEPTION 'A quantidade de prêmio não pode ser negativa';
+END IF;
+IF NEW.quantidadePremio IS NULL THEN
+RAISE EXCEPTION 'A quantidade de prêmio não pode ser nula';
+END IF;
+RETURN NEW;
+END;
+$estoquepremio_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER estoquepremio_gatilho BEFORE INSERT OR UPDATE
+ON EstoquePremio
+FOR EACH ROW EXECUTE
+PROCEDURE estoquepremio_gatilho();
+
 /*Regra de negócio para a tabela Obter*/
 CREATE FUNCTION obter_gatilho() RETURNS trigger AS $obter_gatilho$
 BEGIN
